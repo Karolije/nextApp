@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useQuery } from '@tanstack/react-query';
+import AddUserForm from '../components/AddUserForm'; // Importuj wcześniej przygotowany formularz
 import '../globals.css';
 
 type User = {
@@ -11,24 +12,9 @@ type User = {
 // Funkcja do pobierania użytkowników
 async function fetchUsers(): Promise<User[]> {
   const response = await fetch('http://localhost:3000/api/users');
-  const data = await response.json();
-  return data;
-}
-
-// Funkcja do dodawania użytkownika
-async function addUser(newUser: { name: string }): Promise<User> {
-  const response = await fetch('http://localhost:3000/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newUser),
-  });
-
   if (!response.ok) {
-    throw new Error('Failed to add user');
+    throw new Error('Failed to fetch users');
   }
-
   return response.json();
 }
 
@@ -37,29 +23,6 @@ export default function Omnie() {
     queryKey: ['users'],
     queryFn: fetchUsers,
   });
-
-  const queryClient = useQueryClient();
-
-  // Mutacja do dodawania nowego użytkownika
-  const { mutate, isLoading: isAddingUser, isError: isAddingUserError } = useMutation<User, Error, { name: string }>({
-    mutationFn: addUser,
-    onSuccess: (newUser) => {
-      queryClient.setQueryData<User[]>(['users'], (oldUsers) => [...(oldUsers || []), newUser]);
-    },
-    onError: () => {
-      console.error('Error adding user');
-    },
-  });
-
-  const [newUserName, setNewUserName] = useState('');
-
-  const handleAddUser = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newUserName.trim()) {
-      mutate({ name: newUserName });
-      setNewUserName('');
-    }
-  };
 
   if (isLoading) {
     return <div className="text-center mt-5 text-lg">Ładowanie...</div>;
@@ -84,33 +47,8 @@ export default function Omnie() {
       </ul>
 
       <h2 className="text-xl font-semibold mt-8 mb-4 text-gray-800 text-center">Dodaj nowego użytkownika</h2>
-      <form onSubmit={handleAddUser} className="flex flex-col gap-4">
-        <input
-          type="text"
-          value={newUserName}
-          onChange={(e) => setNewUserName(e.target.value)}
-          placeholder="Wpisz imię użytkownika"
-          required
-          className="p-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm"
-        />
-        <button
-          type="submit"
-          disabled={isAddingUser}
-          className={`p-3 rounded-lg text-white font-medium shadow-md ${
-            isAddingUser
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-green-500 hover:bg-green-600 transition-colors'
-          }`}
-        >
-          {isAddingUser ? 'Dodawanie...' : 'Dodaj użytkownika'}
-        </button>
-      </form>
-
-      {isAddingUserError && (
-        <p className="text-center text-red-500 text-sm mt-4">
-          Wystąpił błąd podczas dodawania użytkownika.
-        </p>
-      )}
+      {/* Formularz dodawania użytkownika */}
+      <AddUserForm />
     </div>
   );
 }
