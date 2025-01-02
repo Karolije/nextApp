@@ -1,21 +1,21 @@
 'use client';
 
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
+import { useMutation, useQueryClient, UseMutationResult } from '@tanstack/react-query';
+import { Input } from '@/app/components/ui/Input';
+import { Button } from '@/app/components/ui/Button';
 
 const userSchema = z.object({
   name: z
     .string()
-    .min(2, 'Imię musi zawierać co najmniej 2 znaki') // Minimalna długość 2 znaki
-    .max(50, 'Imię nie może przekraczać 50 znaków') // Maksymalna długość 50 znaków
-    .regex(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]+$/, 'Imię może zawierać tylko litery i spacje'), // Dodatkowa walidacja liter
+    .min(2, 'Imię musi zawierać co najmniej 2 znaki')
+    .max(50, 'Imię nie może przekraczać 50 znaków')
+    .regex(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]+$/, 'Imię może zawierać tylko litery i spacje'),
 });
 
-
-// Typowanie na podstawie schematu Zod
 type FormValues = z.infer<typeof userSchema>;
 
 async function addUser(newUser: { name: string }) {
@@ -30,12 +30,13 @@ async function addUser(newUser: { name: string }) {
 
 export default function AddUserForm() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
-    resolver: zodResolver(userSchema), // Integracja Zod z react-hook-form
+    resolver: zodResolver(userSchema),
   });
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  // Użycie typu 'UseMutationResult' dla poprawności dostępu do isLoading
+  const mutation: UseMutationResult<any, Error, { name: string }, unknown> = useMutation({
     mutationFn: addUser,
     onSuccess: (newUser) => {
       queryClient.setQueryData(['users'], (old: any) => [...(old || []), newUser]);
@@ -43,32 +44,37 @@ export default function AddUserForm() {
     },
   });
 
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true); // Ustawienie stanu po załadowaniu na kliencie
+  }, []);
+
   const onSubmit = (data: FormValues) => {
     mutation.mutate({ name: data.name });
   };
 
+  if (!isClient) {
+    return null; // Możesz zwrócić null lub loadera, aż komponent zostanie załadowany na kliencie
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <input
+      <Input
         {...register('name')}
         placeholder="Wpisz imię użytkownika"
-        className={`p-3 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-sm ${
-          errors.name ? 'border-red-500' : 'border-gray-300'
-        }`}
+        className={errors.name ? 'border-red-500' : ''}
       />
       {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
-      <button
+      <Button
         type="submit"
-        disabled={mutation.isLoading}
-        className={`p-3 rounded-lg text-white font-medium shadow-md ${
-          mutation.isLoading
-            ? 'bg-gray-300 cursor-not-allowed'
-            : 'bg-green-500 hover:bg-green-600 transition-colors'
-        }`}
+        disabled={mutation.isLoading}  // Użycie isLoading po zaktualizowanym typie
+        className="font-medium"
       >
         {mutation.isLoading ? 'Dodawanie...' : 'Dodaj użytkownika'}
-      </button>
+      </Button>
+
       {mutation.isError && (
         <p className="text-center text-red-500 text-sm mt-4">
           Wystąpił błąd podczas dodawania użytkownika.
