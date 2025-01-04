@@ -1,11 +1,7 @@
+import { NextResponse } from "next/server";
+import { User } from "@/app/types";
 
-import { NextResponse } from 'next/server';
-
-interface User {
-  name: string;
-}
-
-let users = [
+const users: User[] = [
   { id: 1, name: "Anna" },
   { id: 2, name: "Jarek" },
 ];
@@ -16,7 +12,6 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const newUser: User = await request.json();
-
 
   // Dodajemy nowego użytkownika
   const newId = users.length + 1;

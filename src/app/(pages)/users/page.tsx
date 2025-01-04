@@ -1,13 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import AddUserForm from '../components/AddUserForm'; // Importuj wcześniej przygotowany formularz
-import '../globals.css';
-
-type User = {
-  id: number;
-  name: string;
-};
+import { AddUserForm } from '@/app/components';
+import { User } from '@/app/types';
 
 // Funkcja do pobierania użytkowników
 async function fetchUsers(): Promise<User[]> {
@@ -47,7 +42,6 @@ export default function Omnie() {
       </ul>
 
       <h2 className="text-xl font-semibold mt-8 mb-4 text-gray-800 text-center">Dodaj nowego użytkownika</h2>
-      {/* Formularz dodawania użytkownika */}
       <AddUserForm />
     </div>
   );
