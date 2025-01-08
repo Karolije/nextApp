@@ -1,9 +1,9 @@
-import { useUsers } from '../hooks/useUsers';
-import UserList from '../components/UserList';
+import { useUsers } from '../../hooks/useUsers';
+import UserList from '../../components/UserList';
 import dynamic from 'next/dynamic';
 
 // Dynamiczne ładowanie komponentu klienckiego
-const AddUserForm = dynamic(() => import('../components/AddUserForm'), { ssr: false });
+const AddUserForm = dynamic(() => import('@/app/components/users/AddUserForm').then(mod => mod.AddUserForm), { ssr: false });
 
 export default function Omnie() {
   const { users, isLoading, isError } = useUsers();
