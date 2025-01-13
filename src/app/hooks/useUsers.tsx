@@ -1,9 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
-type User = {
-  id: number;
-  name: string;
-};
+import { User } from "@/app/types/user"
 
 const fetchUsers = async (): Promise<User[]> => {
   const response = await fetch('http://localhost:3000/api/users');
