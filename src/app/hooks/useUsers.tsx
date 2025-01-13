@@ -5,13 +5,13 @@ type User = {
   name: string;
 };
 
-async function fetchUsers(): Promise<User[]> {
+const fetchUsers = async (): Promise<User[]> => {
   const response = await fetch('http://localhost:3000/api/users');
   if (!response.ok) throw new Error('Error fetching users');
   return response.json();
-}
+};
 
-async function addUser(newUser: { name: string }): Promise<User> {
+const addUser = async (newUser: { name: string }): Promise<User> => {
   const response = await fetch('http://localhost:3000/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -19,9 +19,9 @@ async function addUser(newUser: { name: string }): Promise<User> {
   });
   if (!response.ok) throw new Error('Failed to add user');
   return response.json();
-}
+};
 
-export function useUsers() {
+export const useUsers = () => {
   const queryClient = useQueryClient();
 
   const { data: users, isLoading, isError } = useQuery<User[], Error>({
@@ -37,4 +37,4 @@ export function useUsers() {
   });
 
   return { users, isLoading, isError, addUserMutation };
-}
+};

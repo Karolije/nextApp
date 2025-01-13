@@ -6,11 +6,9 @@ const users: User[] = [
   { id: 2, name: "Jarek" },
 ];
 
-export async function GET() {
-  return NextResponse.json(users);
-}
+export const GET = async () => NextResponse.json(users);
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const newUser: User = await request.json();
 
   // Dodajemy nowego użytkownika
@@ -19,4 +17,4 @@ export async function POST(request: Request) {
   users.push(createdUser);
 
   return NextResponse.json(createdUser, { status: 201 });
-}
+};

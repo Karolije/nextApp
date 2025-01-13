@@ -2,7 +2,7 @@ type UserListProps = {
   users: { id: number; name: string }[];
 };
 
-export function UserList({ users }: UserListProps) {
+export const UserList = ({ users }: UserListProps) => {
   return (
     <ul className="list-none p-0 text-gray-700 space-y-3">
       {users.map((user) => (
@@ -15,4 +15,4 @@ export function UserList({ users }: UserListProps) {
       ))}
     </ul>
   );
-}
+};

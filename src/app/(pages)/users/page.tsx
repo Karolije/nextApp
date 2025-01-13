@@ -5,15 +5,15 @@ import { AddUserForm } from '@/app/components';
 import { User } from '@/app/types';
 
 // Funkcja do pobierania użytkowników
-async function fetchUsers(): Promise<User[]> {
+const fetchUsers = async (): Promise<User[]> => {
   const response = await fetch('http://localhost:3000/api/users');
   if (!response.ok) {
     throw new Error('Failed to fetch users');
   }
   return response.json();
-}
+};
 
-export default function Omnie() {
+const Omnie = () => {
   const { data: users, isLoading, isError } = useQuery<User[], Error>({
     queryKey: ['users'],
     queryFn: fetchUsers,
@@ -45,4 +45,6 @@ export default function Omnie() {
       <AddUserForm />
     </div>
   );
-}
+};
+
+export default Omnie;

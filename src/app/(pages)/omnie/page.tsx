@@ -3,9 +3,12 @@ import { UserList } from '@/app/components/UserList';
 import dynamic from 'next/dynamic';
 
 // Dynamiczne ładowanie komponentu klienckiego
-const AddUserForm = dynamic(() => import('@/app/components/users/AddUserForm').then(mod => mod.AddUserForm), { ssr: false });
+const AddUserForm = dynamic(
+  () => import('@/app/components/users/AddUserForm').then((mod) => mod.AddUserForm), 
+  { ssr: false }
+);
 
-export default function Omnie() {
+const Omnie = () => {
   const { users, isLoading, isError } = useUsers();
 
   if (isLoading) {
@@ -24,4 +27,6 @@ export default function Omnie() {
       <AddUserForm />
     </div>
   );
-}
+};
+
+export default Omnie;
