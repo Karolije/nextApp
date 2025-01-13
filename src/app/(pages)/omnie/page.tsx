@@ -1,5 +1,5 @@
 import { useUsers } from '../../hooks/useUsers';
-import UserList from '../../components/UserList';
+import { UserList } from '@/app/components/UserList';
 import dynamic from 'next/dynamic';
 
 // Dynamiczne ładowanie komponentu klienckiego
