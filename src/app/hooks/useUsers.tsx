@@ -24,7 +24,11 @@ const addUser = async (newUser: { name: string }): Promise<User> => {
 export const useUsers = () => {
   const queryClient = useQueryClient();
 
-  const { data: users, isLoading, isError } = useQuery<User[], Error>({
+  const {
+    data: users,
+    isLoading,
+    isError,
+  } = useQuery<User[], Error>({
     queryKey: ['users'],
     queryFn: fetchUsers,
   });
@@ -32,7 +36,10 @@ export const useUsers = () => {
   const addUserMutation = useMutation<User, Error, { name: string }>({
     mutationFn: addUser,
     onSuccess: (newUser) => {
-      queryClient.setQueryData<User[]>(['users'], (oldUsers) => [...(oldUsers || []), newUser]);
+      queryClient.setQueryData<User[]>(['users'], (oldUsers) => [
+        ...(oldUsers || []),
+        newUser,
+      ]);
     },
   });
 

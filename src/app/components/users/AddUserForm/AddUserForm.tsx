@@ -7,12 +7,17 @@ import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import { userSchema } from '@/app/schemas';
 import { addUser } from '@/app/services';
-import { USER_KEY} from '@/app/constants';
+import { USER_KEY } from '@/app/constants';
 
 type FormValues = z.infer<typeof userSchema>;
 
 const AddUserForm = () => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: zodResolver(userSchema),
   });
 
@@ -27,7 +32,6 @@ const AddUserForm = () => {
     },
   });
 
-
   const onSubmit = (data: FormValues) => {
     mutate({ name: data.name });
   };
@@ -40,12 +44,10 @@ const AddUserForm = () => {
         placeholder="Wpisz imię użytkownika"
         className={errors.name ? 'border-red-500' : ''}
       />
-      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-      <Button
-        type="submit"
-        disabled={isPending}
-        className="font-medium"
-      >
+      {errors.name && (
+        <p className="text-red-500 text-sm">{errors.name.message}</p>
+      )}
+      <Button type="submit" disabled={isPending} className="font-medium">
         {isPending ? 'Dodawanie...' : 'Dodaj użytkownika'}
       </Button>
 
@@ -56,6 +58,6 @@ const AddUserForm = () => {
       )}
     </form>
   );
-}
+};
 
 export { AddUserForm };

@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
-import { User } from "@/app/types";
+import { NextResponse } from 'next/server';
+import { User } from '@/app/types';
 
 const users: User[] = [
-  { id: 1, name: "Anna" },
-  { id: 2, name: "Jarek" },
+  { id: 1, name: 'Anna' },
+  { id: 2, name: 'Jarek' },
 ];
 
 export const GET = async () => NextResponse.json(users);

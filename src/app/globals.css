@@ -65,13 +65,13 @@ body {
 }
 
 .userInput:focus {
-  border-color: #007BFF;
+  border-color: #007bff;
   outline: none;
 }
 
 .submitButton {
   padding: 10px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;

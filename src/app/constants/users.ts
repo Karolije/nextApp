@@ -1,3 +1,3 @@
 export const USER_KEY = {
-    LIST: 'USER_LIST',
+  LIST: 'USER_LIST',
 };

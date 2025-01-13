@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { cn } from '@/app/lib/utils';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
@@ -11,11 +12,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       'focus:ring-2 focus:ring-blue-400', // Kolor pierścienia focus na niebieski
       'hover:border-blue-500 focus:border-blue-500', // Kolor obramowania na hover i focus
       'placeholder-gray-400', // Kolor placeholdera
-      className // Może być przekazany z zewnątrz
+      className, // Może być przekazany z zewnątrz
     );
 
     return <input ref={ref} className={inputClasses} {...props} />;
-  }
+  },
 );
 
 Input.displayName = 'Input';

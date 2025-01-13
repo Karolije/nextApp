@@ -3,15 +3,11 @@ import { FC, ReactNode } from 'react';
 import { ReactQueryProvider } from './ReactQueryProvider';
 
 export type ProvidersProps = {
-    children: ReactNode
+  children: ReactNode;
 };
 
-const Providers:FC<ProvidersProps> = ({ children }) => {
-    return (
-        <ReactQueryProvider>
-            {children}
-        </ReactQueryProvider>
-    )
-}
+const Providers: FC<ProvidersProps> = ({ children }) => {
+  return <ReactQueryProvider>{children}</ReactQueryProvider>;
+};
 
-export { Providers }
+export { Providers };

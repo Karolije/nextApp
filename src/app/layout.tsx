@@ -16,9 +16,7 @@ const geistMono = localFont({
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <ReactQueryProvider>
-        {children}
-      </ReactQueryProvider>
+      <ReactQueryProvider>{children}</ReactQueryProvider>
     </body>
   </html>
 );
