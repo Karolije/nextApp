@@ -1,13 +1,12 @@
 'use client';
-import axios from 'axios';
+
 import { useQuery } from '@tanstack/react-query';
 import { AddUserForm } from '@/app/components';
 import { User } from '@/app/types';
 
 // Funkcja do pobierania użytkowników
 const fetchUsers = async (): Promise<User[]> => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
-
+  const response = await fetch('http://localhost:3000/api/users');
   if (!response.ok) {
     throw new Error('Failed to fetch users');
   }
