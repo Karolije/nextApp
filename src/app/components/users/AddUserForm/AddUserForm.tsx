@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAddUser } from '@/app/hooks/useAddUser';  // Nowy hook
+import { useAddUser } from '@/app/hooks/useAddUser';  
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import { userSchema } from '@/app/schemas';
@@ -19,7 +19,7 @@ const AddUserForm = () => {
     resolver: zodResolver(userSchema),
   });
 
-  const { mutate, isError, error, isSuccess, isLoading } = useAddUser(); // Użycie hooka
+  const { mutate, isError, error, isSuccess, isLoading } = useAddUser(); 
 
   const onSubmit = (data: FormValues) => {
     mutate({ name: data.name });

@@ -1,27 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useUsers } from '@/app/hooks/useUsers';  // Zaimportuj useUsers
 import { AddUserForm } from '@/app/components';
-import { User } from '@/app/types';
 
-// Funkcja do pobierania użytkowników
-const fetchUsers = async (): Promise<User[]> => {
-  const response = await fetch('http://localhost:3000/api/users');
-  if (!response.ok) {
-    throw new Error('Failed to fetch users');
-  }
-  return response.json();
-};
-
+// Komponent 'Omnie'
 const Omnie = () => {
-  const {
-    data: users,
-    isLoading,
-    isError,
-  } = useQuery<User[], Error>({
-    queryKey: ['users'],
-    queryFn: fetchUsers,
-  });
+  const { users, isLoading, isError } = useUsers();  // Użyj hooka useUsers
 
   if (isLoading) {
     return <div className="text-center mt-5 text-lg">Ładowanie...</div>;
