@@ -23,10 +23,9 @@ const AddUserForm = () => {
 
   const queryClient = useQueryClient();
 
-  const { isPending, mutate, isError, isSuccess } = useMutation({
+  const { mutate, isError, error, isSuccess, isLoading } = useMutation({
     mutationFn: addUser,
     onSuccess: () => {
-      //moze redirect do listy uzytkownikow?
       queryClient.invalidateQueries({ queryKey: [USER_KEY.LIST] });
       reset();
     },
@@ -38,7 +37,7 @@ const AddUserForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      {isSuccess && <div>Dodano uzytkownika</div>}
+      {isSuccess && <div>Dodano użytkownika</div>}
       <Input
         {...register('name')}
         placeholder="Wpisz imię użytkownika"
@@ -47,13 +46,13 @@ const AddUserForm = () => {
       {errors.name && (
         <p className="text-red-500 text-sm">{errors.name.message}</p>
       )}
-      <Button type="submit" disabled={isPending} className="font-medium">
-        {isPending ? 'Dodawanie...' : 'Dodaj użytkownika'}
+      <Button type="submit" disabled={isLoading} className="font-medium">
+        {isLoading ? 'Dodawanie...' : 'Dodaj użytkownika'}
       </Button>
 
       {isError && (
         <p className="text-center text-red-500 text-sm mt-4">
-          Wystąpił błąd podczas dodawania użytkownika.
+          Wystąpił błąd podczas dodawania użytkownika: {error?.message || 'Nieznany błąd.'}
         </p>
       )}
     </form>
