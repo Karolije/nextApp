@@ -2,12 +2,10 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAddUser } from '@/app/hooks/useAddUser';  // Nowy hook
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import { userSchema } from '@/app/schemas';
-import { addUser } from '@/app/services';
-import { USER_KEY } from '@/app/constants';
 
 type FormValues = z.infer<typeof userSchema>;
 
@@ -21,18 +19,11 @@ const AddUserForm = () => {
     resolver: zodResolver(userSchema),
   });
 
-  const queryClient = useQueryClient();
-
-  const { mutate, isError, error, isSuccess, isLoading } = useMutation({
-    mutationFn: addUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_KEY.LIST] });
-      reset();
-    },
-  });
+  const { mutate, isError, error, isSuccess, isLoading } = useAddUser(); // Użycie hooka
 
   const onSubmit = (data: FormValues) => {
     mutate({ name: data.name });
+    reset();
   };
 
   return (
