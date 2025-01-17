@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type User = {
@@ -6,13 +7,10 @@ type User = {
 };
 
 const addUser = async (newUser: { name: string }): Promise<User> => {
-  const response = await fetch('http://localhost:3000/api/users', {
-    method: 'POST',
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, newUser, {
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newUser),
   });
-  if (!response.ok) throw new Error('Failed to add user');
-  return response.json();
+  return response.data;
 };
 
 export const useAddUser = () => {
