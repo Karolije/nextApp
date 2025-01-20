@@ -18,8 +18,8 @@ export const useAddUser = () => {
 
   const addUserMutation = useMutation<User, Error, { name: string }>({
     mutationFn: addUser,
-    onSuccess: (newUser) => {
-      queryClient.setQueryData<User[]>(['users'], (oldUsers) => [...(oldUsers || []), newUser]);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] }); // Invalidate cache for 'users'
     },
   });
 
