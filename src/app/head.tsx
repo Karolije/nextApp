@@ -1,4 +1,4 @@
-import { Metadata } from 'next'; // Importowanie typu Metadata
+import { Metadata } from 'next'; 
 
 export const metadata: Metadata = {
   title: 'Create Next App',

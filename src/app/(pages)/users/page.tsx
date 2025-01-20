@@ -1,11 +1,10 @@
 'use client';
 
-import { useUsers } from '@/app/hooks/useUsers';  // Zaimportuj useUsers
+import { useUsers } from '@/app/hooks/useUsers'; 
 import { AddUserForm } from '@/app/components';
 
-// Komponent 'Omnie'
 const Omnie = () => {
-  const { users, isLoading, isError } = useUsers();  // Użyj hooka useUsers
+  const { users, isLoading, isError } = useUsers(); 
 
   if (isLoading) {
     return <div className="text-center mt-5 text-lg">Ładowanie...</div>;

@@ -2,7 +2,6 @@ import { useUsers } from '../../hooks/useUsers';
 import { UserList } from '@/app/components/UserList';
 import dynamic from 'next/dynamic';
 
-// Dynamiczne ładowanie komponentu klienckiego
 const AddUserForm = dynamic(
   () =>
     import('@/app/components/users/AddUserForm').then((mod) => mod.AddUserForm),
