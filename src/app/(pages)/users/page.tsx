@@ -2,8 +2,9 @@
 
 import { useUsers } from '@/app/hooks/useUsers'; 
 import { AddUserForm } from '@/app/components';
+import Link from 'next/link';
 
-const Omnie = () => {
+const Omnie: React.FC = () => {
   const { users, isLoading, isError } = useUsers(); 
 
   if (isLoading) {
@@ -38,6 +39,16 @@ const Omnie = () => {
         Dodaj nowego użytkownika
       </h2>
       <AddUserForm />
+
+      <Link href="/login">
+
+        <button
+          type="button"
+          className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+        >
+          Zaloguj się
+        </button>
+      </Link>
     </div>
   );
 };
