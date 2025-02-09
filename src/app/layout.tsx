@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { ReactQueryProvider } from './providers/ReactQueryProvider/ReactQueryProvider';
 import { ShoppingCartProvider } from './providers/ShoppingCardProvider';
+import { Navbar } from '@/app/components/Navbar'; // Import Navbar
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,11 +16,12 @@ const geistMono = localFont({
 });
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <html lang="en">
+  <html lang="pl">
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <ReactQueryProvider>
         <ShoppingCartProvider> 
-          {children}
+          <Navbar /> 
+          <main className="p-6">{children}</main>
         </ShoppingCartProvider>
       </ReactQueryProvider>
     </body>
