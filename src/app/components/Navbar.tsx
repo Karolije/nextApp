@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useShoppingCart } from '@/app/providers/ShoppingCardProvider';
+import { useShoppingCart } from '@/app/providers/ShoppingCartProvider';
 
 export const Navbar = () => {
   const { cart } = useShoppingCart();

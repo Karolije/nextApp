@@ -1,7 +1,6 @@
 'use client';
 
 import { Product } from '@/app/components/Products';
-import { Cart } from '@/app/components/Cart';
 
 const products = [
   { id: 1, name: 'Produkt 1', price: 100 },
@@ -19,8 +18,6 @@ export default function ShopPage() {
           <Product key={product.id} {...product} />
         ))}
       </div>
-
-      <Cart />
     </div>
   );
 }

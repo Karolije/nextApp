@@ -1,6 +1,6 @@
 'use client';
 
-import { useShoppingCart } from '@/app/providers/ShoppingCardProvider';
+import { useShoppingCart } from '@/app/providers/ShoppingCartProvider';
 
 interface ProductProps {
   id: number;

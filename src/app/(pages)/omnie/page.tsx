@@ -8,7 +8,7 @@ const AddUserForm = dynamic(
   { ssr: false },
 );
 
-const Omnie = () => {
+export default function Omnie() {
   const { users, isLoading, isError } = useUsers();
 
   if (isLoading) {
@@ -35,6 +35,4 @@ const Omnie = () => {
       <AddUserForm />
     </div>
   );
-};
-
-export default Omnie;
+}

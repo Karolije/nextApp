@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { ReactQueryProvider } from './providers/ReactQueryProvider/ReactQueryProvider';
-import { ShoppingCartProvider } from './providers/ShoppingCardProvider';
+import { ShoppingCartProvider } from './providers/ShoppingCartProvider';
 import { Navbar } from '@/app/components/Navbar'; // Import Navbar
 
 const geistSans = localFont({
