@@ -9,7 +9,7 @@ interface ProductProps {
 }
 
 export const Product = ({ id, name, price }: ProductProps) => {
-  const { cart, addToCart, increaseQuantity, decreaseQuantity } = useShoppingCart();
+  const { cart, addToCart } = useShoppingCart();
   const productInCart = cart.find((item) => item.id === id);
 
   return (
