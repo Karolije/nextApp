@@ -11,9 +11,11 @@ interface Product {
 
 interface ShoppingCartContextType {
   cart: Product[];
-  addToCart: (product: Omit<Product, 'quantity'>) => void;
+  addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(undefined);
@@ -21,7 +23,7 @@ const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(u
 export const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
-  const addToCart = (product: Omit<Product, 'quantity'>) => {
+  const addToCart = (product: Product) => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((item) => item.id === product.id);
       if (existingProduct) {
@@ -39,8 +41,29 @@ export const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setCart([]);
 
+  const increaseQuantity = (id: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (id: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id && item.quantity > 1 
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+  
+
   return (
-    <ShoppingCartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <ShoppingCartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity }}
+    >
       {children}
     </ShoppingCartContext.Provider>
   );
